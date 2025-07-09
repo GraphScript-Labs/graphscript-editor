@@ -25,14 +25,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Show build output
-        run: ls -l && ls -l dist/
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           personal_token: ${{ secrets.GRAPHSCRIPT_EDITOR_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./dist
           publish_branch: gh-pages
           user_name: AttAditya
           user_email: attaditya@users.noreply.github.com
