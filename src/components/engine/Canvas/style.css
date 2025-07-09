@@ -1,0 +1,12 @@
+.canvas {
+  padding: 5rem 10rem;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.nodes {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+}
+

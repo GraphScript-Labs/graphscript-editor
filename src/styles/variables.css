@@ -1,0 +1,15 @@
+:root {
+  --window-background: #1a1a1f;
+  
+  --color-background: #2a2a30;
+  --color-primary: #FF9800;
+
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+  --color-gray: #808080;
+
+  --color-danger: #FF4C4C;
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+}
+

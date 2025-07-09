@@ -1,0 +1,67 @@
+.root-tool-bar {
+  display: flex;
+  padding: 0 1rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.root-tool {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.root-tool.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.root-tool-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  border-radius: 1rem;
+  background-color: transparent;
+  scale: 0.9;
+}
+
+.root-tool:not(.disabled):hover .root-tool-icon {
+  scale: 1;
+  background-color: var(--color-black);
+}
+
+.root-tool:not(.disabled):active .root-tool-icon {
+  background-color: var(--color-black);
+  scale: 0.5;
+}
+
+.root-tool-icon > * {
+  width: 1rem;
+  height: 1rem;
+  color: inherit;
+}
+
+.root-tool-name {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-black);
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  transform: translate(-50%, -1rem);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.root-tool:hover .root-tool-name {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+

@@ -1,0 +1,73 @@
+.prompt-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #00000033;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.prompt-wrapper.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.prompt-main {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  scale: 0;
+}
+
+.prompt-wrapper.active .prompt-main {
+  scale: 1;
+}
+
+.prompt-main .glass-input {
+  box-shadow: none !important;
+}
+
+.prompt-message {
+  font-size: 1.2rem;
+  color: var(--color-white);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.prompt-input {
+  width: min(60vw, 50rem);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.prompt-input input {
+  flex: 1;
+}
+
+.prompt-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  scale: 0.9;
+}
+
+.prompt-button:hover {
+  scale: 1;
+  background-color: var(--color-black);
+}
+
+.prompt-button:active {
+  scale: 0.5;
+}
+

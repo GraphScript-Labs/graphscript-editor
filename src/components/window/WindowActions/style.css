@@ -1,0 +1,49 @@
+.root-window-actions {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+}
+
+.root-window-actions-button {
+  --window-button-size: 0.75rem;
+  --button-icon-size: 0.25rem;
+  
+  height: var(--window-button-size);
+  width: var(--window-button-size);
+  border-radius: var(--window-button-size);;
+  background-color: var(--color-white);
+  color: var(--color-white);
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.root-window-actions-button:hover::after {
+  content: "";
+  background: #FFFFFF;
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  border-radius: var(--button-icon-size);
+}
+
+.root-window-actions-button[data-action="close"] {
+  background-color: var(--color-danger);
+}
+
+.root-window-actions-button[data-action="minimize"] {
+  background-color: var(--color-warning);
+}
+
+.root-window-actions-button[data-action="maximize"] {
+  background-color: var(--color-success);
+}
+
+.root-window-actions-button:disabled {
+  opacity: 0.5;
+  background-color: var(--color-white) / 0.5);
+  cursor: not-allowed;
+}
+

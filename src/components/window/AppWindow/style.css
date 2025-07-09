@@ -1,0 +1,35 @@
+.root-app-window {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  padding-top: 0.5rem;
+  background: var(--window-background);
+  gap: 0.5rem;
+}
+
+.root-app-window.is-desktop {
+  padding: 0;
+  background: transparent;
+}
+
+.root-app-window-content {
+  position: relative;
+  overflow: auto;
+  border-radius: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem;
+  background: var(--color-background);
+}
+
+.root-app-window.is-desktop .root-app-window-content {
+  padding: 0;
+  background: transparent;
+}
+

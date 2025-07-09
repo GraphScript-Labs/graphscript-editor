@@ -1,0 +1,19 @@
+.glass-input {
+  backdrop-filter: blur(1rem) !important;
+  -webkit-backdrop-filter: blur(1rem);
+  background: #7f7f7f88;
+  border: 0.25rem solid #ffffff1a;
+  border-radius: 0.75rem;
+  box-shadow: 0 0 2rem 1rem #0000004d;
+  font-size: 1rem;
+  padding: 0.5rem;
+  cursor: text;
+  outline: none;
+  font-family: "JetBrains Mono", monospace;
+  position: relative;
+}
+
+.glass-input:focus {
+  outline: 0.25rem solid var(--color-primary);
+}
+

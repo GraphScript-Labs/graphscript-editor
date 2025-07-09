@@ -1,0 +1,21 @@
+.glass-card {
+  backdrop-filter: blur(0.125rem);
+  -webkit-backdrop-filter: blur(0.125rem);
+  background: #7f7f7f88;
+  border: 0.25rem solid #ffffff1a;
+  border-radius: 1rem;
+  box-shadow: 0 0 2rem 1rem #0000004d;
+}
+
+.glass-card-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  color: inherit;
+  opacity: 0.4;
+  border-radius: calc(var(--icon-size) / 2 - 0.25rem);
+  filter: blur(0.5rem);
+}
+
