@@ -1,5 +1,9 @@
 {
   "name": "graphscript",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GraphScript-Labs/graphscript-editor.git"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",
