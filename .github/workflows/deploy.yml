@@ -30,7 +30,7 @@ jobs:
         with:
           personal_token: ${{ secrets.GRAPHSCRIPT_EDITOR_TOKEN }}
           publish_dir: ./build
-          publish_branch: build
+          publish_branch: gh-pages
           user_name: AttAditya
           user_email: attaditya@users.noreply.github.com
 
