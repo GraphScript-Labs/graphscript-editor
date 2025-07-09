@@ -32,12 +32,10 @@ jobs:
           rm -rf dist
 
       - name: Commit and Push Changes
-        env:
-          TOKEN: ${{ secrets.GRAPHSCRIPT_EDITOR_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           git diff --cached --quiet || git commit -m "Deploy GS Editor"
-          git push https://x-access-token:${TOKEN}@github.com/GraphScript-Labs/graphscript-editor.git HEAD:build
+          git push https://x-access-token:${{ secrets.GRAPHSCRIPT_EDITOR_TOKEN }}@github.com/GraphScript-Labs/graphscript-editor.git HEAD:build
 
