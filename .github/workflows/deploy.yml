@@ -9,39 +9,28 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v2
-        with:
-          ref: main
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 20
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Build Project
+      - name: Build project
         run: npm run build
 
-      - name: Switch to build branch
-        run: |
-          git fetch origin build || echo "No remote build branch yet"
-          git checkout build || git checkout --orphan build
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GRAPHSCRIPT_EDITOR_TOKEN }}
+          publish_dir: ./build
+          publish_branch: build
+          user_name: AttAditya
+          user_email: attaditya@users.noreply.github.com
 
-      - name: Copy Build Files
-        run: |
-          rm -rf *
-          cp -r dist/* .
-          touch .nojekyll
-          rm -rf dist
-
-      - name: Commit and Push Changes
-        run: |
-          git config user.name "GraphScript Labs Bot"
-          git config user.email "bot@graphscriptlabs.dev"
-          git add .
-          git diff --cached --quiet || git commit -m "Deploy GS Editor"
-          git push https://x-access-token:${{ secrets.GRAPHSCRIPT_EDITOR_TOKEN }}@github.com/GraphScript-Labs/graphscript-editor.git HEAD:build
