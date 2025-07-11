@@ -1,21 +1,22 @@
 import type { ReactNode } from "react";
+
+import type { Suggestion, ToolButtonData } from "@defs/UI";
+
 import { isDesktop } from "@utils/desktopTools";
 
 import { AppBar } from "@components/window/AppBar";
-import type { ToolButtonData } from "@components/window/ToolBar";
-import type { Suggestion } from "@components/window/Pallete";
 
 import "./style.css";
 
 export function AppWindow({
   children,
   tools = [],
-  extraTitle = "",
+  breadcrumb = "",
   generateSuggestions = () => [],
 }: {
   children?: ReactNode;
   tools?: ToolButtonData[];
-  extraTitle?: string;
+  breadcrumb?: string;
   generateSuggestions?: (query: string) => Suggestion[];
 }) {
   return (<>
@@ -24,7 +25,7 @@ export function AppWindow({
     }`}>
       <AppBar
         tools={tools}
-        extraTitle={extraTitle}
+        breadcrumb={breadcrumb}
         generateSuggestions={generateSuggestions}
       />
       

@@ -1,13 +1,8 @@
+import type { ToolButtonData } from "@defs/UI";
+
 import { DynamicIcon } from "@components/commons/DynamicIcon";
 
 import "./style.css";
-
-export type ToolButtonData = {
-  name: string;
-  icon: string;
-  action: () => void;
-  disabled?: boolean;
-};
 
 export function ToolBar({ tools }: {
   tools: ToolButtonData[];

@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 
+import type { Suggestion } from "@defs/UI";
+
 import { Input } from "@components/commons/Input";
 import { DynamicIcon } from "@components/commons/DynamicIcon";
 
 import "./style.css";
-
-export type Suggestion = {
-  name: string;
-  icon: string;
-  action: () => void;
-}
 
 export function Pallete({
   generateSuggestions,

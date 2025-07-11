@@ -7,6 +7,24 @@ const setupDesktopTools = () => {
     return !!pwv;
   }
 
+  const waitForPWV = (): Promise<void> => {
+    return (new Promise((resolve) => {
+      if (!isDesktop()) {
+        resolve();
+        return;
+      }
+
+      if (Object.keys(pwv?.api || {}).length) {
+        resolve();
+        return;
+      }
+
+      setTimeout(() => {
+        resolve();
+      }, 100);
+    }));
+  }
+
   const closeWindow = async () => {
     return pwv?.api.close();
   }
@@ -72,8 +90,8 @@ const setupDesktopTools = () => {
   }
 
   const loadProjectId = async (): Promise<string | null> => {
-    if (!isDesktop()) return null;
-    return pwv!.api.load_project_id() || null;
+    await waitForPWV();
+    return (await pwv!.api.load_project_id()) || null;
   }
 
   return {

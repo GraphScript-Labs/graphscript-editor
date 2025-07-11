@@ -1,34 +1,30 @@
 import type { RefObject } from "react";
+
 import type { NodeSystem, Variable } from "@defs/Node";
+import type { Suggestion } from "@defs/UI";
 
 import { loadProjectId } from "@utils/desktopTools";
 import { loadData, wipeData } from "@utils/persistentTools";
 import { generateId } from "@utils/generatorTools";
 import { downloadScript } from "@utils/compilerTools";
 import {
-  getProjectId,
-  setProjectId,
   loadProject,
   saveProject,
 } from "@utils/engineTools";
 
-import type { Suggestion } from "@components/window/Pallete";
-
 const setupProjectTools = () => {
-  const loadActiveProjectId = async (): Promise<boolean> => {
-    if (getProjectId()) return false;
-
+  const loadExistingId = async (): Promise<string> => {
     const injectedKey: string | null = await loadProjectId();
     const existingKey: string | null = loadData("activeProjectId");
     const fallsafeKey: string = generateId();
-
     const projectKey = injectedKey || existingKey || fallsafeKey;
-    setProjectId(projectKey);
     
-    return projectKey !== fallsafeKey;
+    return projectKey;
   }
 
   const getWindowTools = (
+    projectId: string | null,
+    setProjectId: (id: string | null) => void,
     closeNode: () => void,
     isEntry: (nodeId: string) => boolean,
     activeNode: string,
@@ -63,6 +59,8 @@ const setupProjectTools = () => {
         name: "Load Project",
         icon: "HardDriveUpload",
         action: () => loadProject(
+          projectId,
+          setProjectId,
           overrideNodeSystem,
           overrideVariables,
           openNode,
@@ -74,6 +72,7 @@ const setupProjectTools = () => {
         name: "Save Project",
         icon: "HardDriveDownload",
         action: () => saveProject(
+          projectId!,
           nodeSystem,
           entries,
           {
@@ -151,6 +150,7 @@ const setupProjectTools = () => {
   }
 
   const getBreadcrumb = (
+    projectId: string | null,
     nodeHistory: RefObject<string[]>,
     activeNode: string,
   ) => {
@@ -159,21 +159,21 @@ const setupProjectTools = () => {
       activeNode
     ].join(" > ");
 
-    return `[ ${getProjectId()} ] : ${breadcrumb}`;
+    return `[ ${projectId} ] : ${breadcrumb}`;
   };
 
   return {
-    loadActiveProjectId,
     getWindowTools,
     getBreadcrumb,
+    loadExistingId,
     updatePalleteRegistry,
   };
 }
 
 export const {
-  loadActiveProjectId,
   getWindowTools,
   getBreadcrumb,
+  loadExistingId,
   updatePalleteRegistry,
 } = setupProjectTools();
 

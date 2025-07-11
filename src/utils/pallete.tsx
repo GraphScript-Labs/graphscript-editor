@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from "react";
 
-import type { Suggestion } from "@components/window/Pallete";
+import type { Suggestion } from "@defs/UI";
 
 function createPalleteContext() {
   const PalleteContext = createContext<{

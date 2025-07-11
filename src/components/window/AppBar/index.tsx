@@ -1,18 +1,20 @@
+import type { Suggestion, ToolButtonData } from "@defs/UI";
+
 import { isDesktop } from "@utils/desktopTools";
 
 import { WindowActions } from "@components/window/WindowActions";
-import { ToolBar, type ToolButtonData } from "@components/window/ToolBar";
-import { Pallete, type Suggestion } from "@components/window/Pallete";
+import { ToolBar  } from "@components/window/ToolBar";
+import { Pallete  } from "@components/window/Pallete";
 
 import "./style.css";
 
 export function AppBar({
   tools=[],
-  extraTitle = "",
+  breadcrumb = "",
   generateSuggestions = () => [],
 }: {
   tools?: ToolButtonData[];
-  extraTitle?: string;
+  breadcrumb?: string;
   generateSuggestions?: (query: string) => Suggestion[];
 }) {
   const title: string = "GraphScript Engine";
@@ -35,7 +37,7 @@ export function AppBar({
 
       <div className="root-app-extra-title">
         <span>
-          {extraTitle}
+          {breadcrumb}
         </span>
       </div>
     </div>

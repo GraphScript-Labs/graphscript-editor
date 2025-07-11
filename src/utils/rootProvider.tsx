@@ -6,6 +6,7 @@ import { VariablesProvider } from "@utils/variables";
 import { NodeSystemProvider } from "@utils/nodeSystem";
 import { NodeHistoryProvider } from "@utils/nodeHistory";
 import { NodeFactoryProvider } from "@utils/nodeFactory";
+import { AppDataProvider } from "@utils/appData";
 
 type ProviderType = ({ children }: {
   children: ReactNode;
@@ -21,6 +22,7 @@ export function RootProvider({ children }: {
     NodeSystemProvider,
     NodeHistoryProvider,
     NodeFactoryProvider,
+    AppDataProvider,
   ];
 
   return providers.reduceRight((acc, Provider) => {

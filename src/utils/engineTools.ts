@@ -6,7 +6,7 @@ import type {
 } from "@defs/Node";
 
 import { loadFile, saveFile } from "@utils/desktopTools";
-import { loadData, saveData } from "./persistentTools";
+import { loadData, saveData } from "@utils/persistentTools";
 
 type PackedNode = {
   id: string;
@@ -35,17 +35,8 @@ type PackedNodeSystem = {
 };
 
 const setupEngineTools = () => {
-  let projectId: string | null = null;
-  
-  const setProjectId = (id: string) => {
-    projectId = id;
-  };
-
-  const getProjectId = (): string | null => {
-    return projectId;
-  };
-
   const saveProject = (
+    projectId: string,
     nodeSystem: NodeSystem,
     entries: string[],
     variables: {
@@ -121,13 +112,15 @@ const setupEngineTools = () => {
       return;
     }
 
-    saveFile(dataJSON, "project.json", [
+    saveFile(dataJSON, `project_${projectId}.json`, [
       "Project Files (*.json)",
       "All Files (*.*)"
     ]);
   };
 
   const loadProject = async (
+    projectId: string | null,
+    setProjectId: (id: string) => void,
     overrideNodeSystem: (
       system: NodeSystem,
       entries: string[],
@@ -140,7 +133,22 @@ const setupEngineTools = () => {
     removeNode: (nodeId: string) => void,
     upload: boolean = false,
   ) => {
-    let fileContents: string | null = loadData(`p:${projectId}`);
+    let fileContents: string | null = loadData(`p:${projectId}`) || `{
+      "projectId": "${projectId}",
+      "entries": ["ENTRY"],
+      "nodes": {},
+      "system": {
+        "ENTRY": {
+          "baseId": "ENTRY",
+          "nodes": [],
+          "isEntry": true
+        }
+      },
+      "variables": {
+        "states": [],
+        "customComponents": []
+      }
+    }`;
     
     if (upload) fileContents = await loadFile();
     if (!fileContents) return;
@@ -222,15 +230,11 @@ const setupEngineTools = () => {
   return {
     saveProject,
     loadProject,
-    setProjectId,
-    getProjectId,
   }
 };
 
 export const {
   saveProject,
   loadProject,
-  setProjectId,
-  getProjectId,
 } = setupEngineTools();
 

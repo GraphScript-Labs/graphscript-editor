@@ -137,3 +137,7 @@
   width: 100%;
 }
 
+.node-base-input input::placeholder {
+  color: #ffffff66;
+}
+
