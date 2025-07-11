@@ -6,6 +6,7 @@ import type {
 } from "@defs/Node";
 
 import { loadFile, saveFile } from "@utils/desktopTools";
+import { loadData, saveData } from "./persistentTools";
 
 type PackedNode = {
   id: string;
@@ -34,6 +35,16 @@ type PackedNodeSystem = {
 };
 
 const setupEngineTools = () => {
+  let projectId: string | null = null;
+  
+  const setProjectId = (id: string) => {
+    projectId = id;
+  };
+
+  const getProjectId = (): string | null => {
+    return projectId;
+  };
+
   const saveProject = (
     nodeSystem: NodeSystem,
     entries: string[],
@@ -41,6 +52,7 @@ const setupEngineTools = () => {
       states: Variable[];
       customComponents: Variable[];
     },
+    download: boolean = false,
   ) => {
     const savedNodes: PackedNodeMap = {};
 
@@ -82,11 +94,32 @@ const setupEngineTools = () => {
 
     const packedSystem = packNodeSystem(nodeSystem);
     const dataJSON = JSON.stringify({
+      projectId,
       entries,
       nodes: savedNodes,
       system: packedSystem,
       variables,
     });
+
+    if (!download) {
+      if (projectId) {
+        saveData(`p:${projectId}`, dataJSON);
+        saveData("activeProjectId", projectId);
+        
+        const projectMap = JSON.parse(
+          loadData(`projectMap`) || "{}"
+        );
+
+        projectMap[projectId] = {
+          id: projectId,
+          status: "accessible",
+        };
+
+        saveData(`projectMap`, JSON.stringify(projectMap));
+      }
+
+      return;
+    }
 
     saveFile(dataJSON, "project.json", [
       "Project Files (*.json)",
@@ -96,7 +129,7 @@ const setupEngineTools = () => {
 
   const loadProject = async (
     overrideNodeSystem: (
-      system: NodeSystem, 
+      system: NodeSystem,
       entries: string[],
     ) => void,
     overrideVariables: (
@@ -105,11 +138,15 @@ const setupEngineTools = () => {
     ) => void,
     openNode: (nodeId: string) => void,
     removeNode: (nodeId: string) => void,
+    upload: boolean = false,
   ) => {
-    const fileContents: string | null = await loadFile();
+    let fileContents: string | null = loadData(`p:${projectId}`);
+    
+    if (upload) fileContents = await loadFile();
     if (!fileContents) return;
 
     const data: {
+      projectId: string;
       entries: string[];
       nodes: PackedNodeMap;
       system: PackedNodeSystem;
@@ -169,6 +206,8 @@ const setupEngineTools = () => {
       loadedSystem[baseId] = group;
     }
 
+    setProjectId(data.projectId);
+
     overrideNodeSystem(
       loadedSystem,
       data.entries
@@ -183,11 +222,15 @@ const setupEngineTools = () => {
   return {
     saveProject,
     loadProject,
+    setProjectId,
+    getProjectId,
   }
 };
 
 export const {
   saveProject,
   loadProject,
+  setProjectId,
+  getProjectId,
 } = setupEngineTools();
 

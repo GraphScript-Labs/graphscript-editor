@@ -71,12 +71,18 @@ const setupDesktopTools = () => {
     return promise;
   }
 
+  const loadProjectId = async (): Promise<string | null> => {
+    if (!isDesktop()) return null;
+    return pwv!.api.load_project_id() || null;
+  }
+
   return {
     isDesktop,
     closeWindow,
     toggleWindowFullscreen,
     saveFile,
     loadFile,
+    loadProjectId,
   }
 };
 
@@ -86,5 +92,6 @@ export const {
   toggleWindowFullscreen,
   saveFile,
   loadFile,
+  loadProjectId,
 } = setupDesktopTools();
 

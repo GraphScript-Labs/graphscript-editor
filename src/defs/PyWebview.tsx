@@ -8,6 +8,7 @@ export interface PyWebview {
       file_types?: string[],
     ) => Promise<void>;
     load_file: () => Promise<string>;
+    load_project_id: () => Promise<string | null>;
   }
 }
 
