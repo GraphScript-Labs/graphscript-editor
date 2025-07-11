@@ -90,6 +90,7 @@ const setupDesktopTools = () => {
   }
 
   const loadProjectId = async (): Promise<string | null> => {
+    if (!isDesktop()) return null;
     await waitForPWV();
     return (await pwv!.api.load_project_id()) || null;
   }
