@@ -120,7 +120,6 @@ const setupEngineTools = () => {
 
   const loadProject = async (
     projectId: string | null,
-    setProjectId: (id: string) => void,
     overrideNodeSystem: (
       system: NodeSystem,
       entries: string[],
@@ -213,8 +212,6 @@ const setupEngineTools = () => {
       
       loadedSystem[baseId] = group;
     }
-
-    setProjectId(data.projectId);
 
     overrideNodeSystem(
       loadedSystem,

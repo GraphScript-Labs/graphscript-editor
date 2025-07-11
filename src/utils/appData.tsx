@@ -99,7 +99,6 @@ const createAppDataContext = () => {
       setWindowTools(
         getWindowTools(
           projectId,
-          setProjectId,
           closeNode,
           isEntry,
           activeNode,
@@ -155,10 +154,11 @@ const createAppDataContext = () => {
 
     useEffect(() => {
       (async () => {
-        const newProjectId = await loadExistingId();
+        const existingId = await loadExistingId();
+        setProjectId(existingId);
+
         loadProject(
-          newProjectId,
-          setProjectId,
+          existingId,
           overrideNodeSystem,
           overrideVariables,
           openNode,
@@ -166,9 +166,9 @@ const createAppDataContext = () => {
         );
       })();
     }, [
+      openNode,
       overrideNodeSystem,
       overrideVariables,
-      openNode,
       removeNode,
     ]);
 

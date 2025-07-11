@@ -24,7 +24,6 @@ const setupProjectTools = () => {
 
   const getWindowTools = (
     projectId: string | null,
-    setProjectId: (id: string | null) => void,
     closeNode: () => void,
     isEntry: (nodeId: string) => boolean,
     activeNode: string,
@@ -60,7 +59,6 @@ const setupProjectTools = () => {
         icon: "HardDriveUpload",
         action: () => loadProject(
           projectId,
-          setProjectId,
           overrideNodeSystem,
           overrideVariables,
           openNode,

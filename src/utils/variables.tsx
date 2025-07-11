@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useCallback, useContext, useState, type ReactNode } from "react"
 
 import type { Variable } from "@defs/Node";
 
@@ -74,7 +74,7 @@ const createVariablesContext = () => {
       addState(entryName);
     };
 
-    const overrideVariables = (
+    const overrideVariables = useCallback((
       states: Variable[],
       customComponents: Variable[],
     ) => {
@@ -82,7 +82,7 @@ const createVariablesContext = () => {
       setCcSet(new Set(customComponents.map(c => c.name)));
       setStatesList(states);
       setCComponents(customComponents);
-    };
+    }, []);
 
     const exposed = {
       statesList,
