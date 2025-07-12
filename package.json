@@ -9,9 +9,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && npm run verlog",
     "lint": "eslint .",
     "preview": "vite preview",
+    "verlog": "date +%s > dist/version",
     "start": "npm run dev"
   },
   "dependencies": {
