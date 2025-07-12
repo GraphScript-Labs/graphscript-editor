@@ -43,7 +43,6 @@
 
 .root-window-actions-button:disabled {
   opacity: 0.5;
-  background-color: var(--color-white);
   cursor: not-allowed;
 }
 
