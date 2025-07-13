@@ -4,7 +4,7 @@ const setupDesktopTools = () => {
   const pwv: PyWebview | undefined = window.pywebview;
 
   const isDesktop = (): boolean => {
-    return !!pwv;
+    return document.body.getAttribute("data-pywebview-id") !== null;
   }
 
   const waitForPWV = (): Promise<void> => {
