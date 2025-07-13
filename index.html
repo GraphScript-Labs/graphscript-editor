@@ -22,6 +22,21 @@
     <meta name="twitter:description" content="GraphScript is a general-purpose visual scripting editor that lets you build logic by connecting visual nodes. No code, just flow.">
     <meta name="twitter:image" content="https://github.com/GraphScript-Labs/.github/blob/main/Banner.png?raw=true">
 
+    <script src="/pwv.js"></script>
+
+    <script defer>
+      if (!window.hasPWV) {
+        const element = document.querySelector(".pywebview-drag-region");
+        element.remove();
+      }
+    </script>
+    
+    <script>
+      document.addEventListener("contextmenu", (event) => {
+        event.preventDefault();
+      });
+    </script>
+
     <style>
       .pywebview-drag-region {
         position: fixed;
@@ -39,31 +54,6 @@
   <body>
     <span class="pywebview-drag-region"></span>
     <div id="root"></div>
-
-    <script defer>
-      let checkCount = 0;
-
-      const pwvCheckInterval = setInterval(() => {
-        if (window.pywebview !== undefined) {
-          const dragRegion = document.querySelector('.pywebview-drag-region');
-          if (dragRegion) dragRegion.style.display = 'block';
-        }
-
-        if (checkCount > 1000 || window.pywebview !== undefined) {
-          clearInterval(pwvCheckInterval);
-          return;
-        }
-
-        checkCount++;
-      }, 10);
-    </script>
-    
-    <script>
-      document.addEventListener("contextmenu", (event) => {
-        event.preventDefault();
-      });
-    </script>
-
-    <script type="module" src="/src/main.tsx" defer></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

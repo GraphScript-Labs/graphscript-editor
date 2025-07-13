@@ -7,5 +7,6 @@ export {};
 declare global {
   interface Window {
     pywebview?: PyWebview;
+    hasPWV?: boolean;
   }
 }

@@ -1,36 +1,40 @@
 import type { PyWebview } from "@defs/PyWebview";
 
 const setupDesktopTools = () => {
-  const pwv: PyWebview | undefined = window.pywebview;
+  const getApi = (): PyWebview["api"] | undefined => {
+    return window.pywebview?.api;
+  };
+
+  const checkApiState = (): boolean => {
+    return !!Object.keys(getApi() || {}).length;
+  };
 
   const isDesktop = (): boolean => {
-    return document.body.getAttribute("data-pywebview-id") !== null;
+    return !!window.hasPWV;
   }
 
   const waitForPWV = (): Promise<void> => {
     return (new Promise((resolve) => {
-      if (!isDesktop()) {
+      if (!isDesktop() || checkApiState()) {
         resolve();
         return;
       }
 
-      if (Object.keys(pwv?.api || {}).length) {
-        resolve();
-        return;
-      }
-
-      setTimeout(() => {
-        resolve();
-      }, 100);
+      const checkInterval = setInterval(() => {
+        if (checkApiState()) {
+          resolve();
+          clearInterval(checkInterval);
+        }
+      }, 10);
     }));
   }
 
   const closeWindow = async () => {
-    return pwv?.api.close();
+    return getApi()?.close();
   }
 
   const toggleWindowFullscreen = async () => {
-    return pwv?.api.toggle_fullscreen();
+    return getApi()?.toggle_fullscreen();
   }
 
   const saveFile = async (
@@ -39,7 +43,7 @@ const setupDesktopTools = () => {
     fileTypes?: string[],
   ) => {
     if (isDesktop())
-      return pwv!.api.save_file(content, saveName, fileTypes);
+      return getApi()!.save_file(content, saveName, fileTypes);
     
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -57,7 +61,7 @@ const setupDesktopTools = () => {
 
   const loadFile = async (): Promise<string | null> => {
     if (isDesktop())
-      return pwv!.api.load_file() || null;
+      return getApi()!.load_file() || null;
     
     const promise = new Promise<string | null>((resolve) => {
       const input = document.createElement("input");
@@ -92,7 +96,7 @@ const setupDesktopTools = () => {
   const loadProjectId = async (): Promise<string | null> => {
     if (!isDesktop()) return null;
     await waitForPWV();
-    return (await pwv!.api.load_project_id()) || null;
+    return (await getApi()!.load_project_id()) || null;
   }
 
   return {
