@@ -53,7 +53,7 @@ jobs:
         run: |
           git add .
           git commit -m "Latest build $(date "+%Y-%m-%d %H:%M:%S")"
-          git push origin latest-release
+          git push -f origin latest-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
