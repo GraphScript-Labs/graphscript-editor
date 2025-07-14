@@ -38,6 +38,11 @@ jobs:
         run: |
           date +%s > version.txt
 
+      - name: Set up Git
+        run: |
+          git config --global user.name "GraphScript Bot"
+          git config --global user.email "actions@graphscript-labs.noreply.github.com"
+
       - name: Commit and push changes
         run: |
           git add .
