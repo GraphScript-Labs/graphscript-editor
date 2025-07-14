@@ -30,9 +30,14 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Move dist files
+      - name: Clean up source files
         run: |
           find . -mindepth 1 -maxdepth 1 ! -name 'dist' ! -name '.git' -exec rm -rf {} +
+
+      - name: Copy files from dist
+        run: |
+          mv dist/* .
+          rmdir dist
 
       - name: Version File
         run: |
