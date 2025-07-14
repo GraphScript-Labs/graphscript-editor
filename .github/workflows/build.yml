@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - gh_pages
+  workflow_dispatch:
+
+jobs:
+  duplicate-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source branch
+        uses: actions/checkout@v3
+        with:
+          ref: gh_pages
+          fetch-depth: 0
+
+      - name: Clone target branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@GraphScript-Labs.noreply.github.com"
+          git checkout -B latest-release
+          git push -f origin latest-release
+
+      - name: Version File
+        run: |
+          date +%s > version.txt
+
+      - name: Commit version file
+        run: |
+          git add version.txt
+          git commit -m "Add version file"
+          git push origin latest-release
