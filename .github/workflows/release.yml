@@ -32,9 +32,7 @@ jobs:
 
       - name: Move dist files
         run: |
-          mv * all_files/
-          mv all_files/dist/* ./
-          rm -rf all_files
+          find . -mindepth 1 -maxdepth 1 ! -name 'dist' -exec rm -rf {} +
 
       - name: Version File
         run: |
