@@ -41,6 +41,6 @@ jobs:
       - name: Commit and push changes
         run: |
           git add .
-          git commit -m "Latest build $(date +%Y-%m-%d %H:%M:%S)"
+          git commit -m "Latest build $(date "+%Y-%m-%d %H:%M:%S")"
           git push origin latest-release
 
