@@ -41,7 +41,7 @@ jobs:
 
       - name: Version File
         run: |
-          date +%s > version.txt
+          date +%s > version
 
       - name: Set up Git
         run: |
