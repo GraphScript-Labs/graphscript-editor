@@ -42,6 +42,7 @@ jobs:
         run: |
           git config --global user.name "GraphScript Bot"
           git config --global user.email "actions@graphscript-labs.noreply.github.com"
+          git checkout -B latest-release
 
       - name: Commit and push changes
         run: |
