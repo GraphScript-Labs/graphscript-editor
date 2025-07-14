@@ -32,7 +32,7 @@ jobs:
 
       - name: Move dist files
         run: |
-          find . -mindepth 1 -maxdepth 1 ! -name 'dist' -exec rm -rf {} +
+          find . -mindepth 1 -maxdepth 1 ! -name 'dist' ! -name '.git' -exec rm -rf {} +
 
       - name: Version File
         run: |
