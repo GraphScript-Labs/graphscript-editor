@@ -5,34 +5,14 @@ import type {
   Variable,
 } from "@defs/Node";
 
+import type {
+  PackedNodeMap,
+  PackedNodeSystem,
+} from "@defs/Packed";
+
 import { loadFile, saveFile } from "@utils/desktopTools";
 import { loadData, saveData } from "@utils/persistentTools";
-
-type PackedNode = {
-  id: string;
-  code?: string;
-  name: string;
-  color: string;
-  icon: string;
-  hasNext?: boolean;
-  value?: string;
-  isBase?: boolean;
-  isTopLevel?: boolean;
-};
-
-type PackedNodeMap = {
-  [id: string]: PackedNode;
-};
-
-type PackedNodeGroup = {
-  baseId: string;
-  nodes: string[];
-  isEntry?: boolean;
-};
-
-type PackedNodeSystem = {
-  [baseId: string]: PackedNodeGroup;
-};
+import { packProject } from "@utils/packerTools";
 
 const setupEngineTools = () => {
   const saveProject = (
@@ -45,52 +25,14 @@ const setupEngineTools = () => {
     },
     download: boolean = false,
   ) => {
-    const savedNodes: PackedNodeMap = {};
-
-    const packNode = (node: NodeModel): PackedNode => {
-      const packedNode: PackedNode = {
-        id: node.id!,
-        code: node.code,
-        name: node.name,
-        color: node.color,
-        icon: node.icon,
-        hasNext: node.hasNext,
-        value: node.value,
-        isBase: node.isBase,
-        isTopLevel: node.isTopLevel
-      };
-
-      savedNodes[node.id!] = packedNode;
-      return packedNode;
-    };
-    
-    const packNodeGroup = (group: NodeGroup): PackedNodeGroup => {
-      return {
-        baseId: group.baseId,
-        nodes: group.nodes.map(node => packNode(node).id),
-        isEntry: group.isEntry
-      };
-    };
-    
-    const packNodeSystem = (nodeSystem: NodeSystem): PackedNodeSystem => {
-      const packedSystem: PackedNodeSystem = {};
-
-      for (const baseId in nodeSystem) {
-        const group = nodeSystem[baseId];
-        packedSystem[baseId] = packNodeGroup(group);
-      }
-
-      return packedSystem;
-    };
-
-    const packedSystem = packNodeSystem(nodeSystem);
-    const dataJSON = JSON.stringify({
+    const packedProject = packProject(
       projectId,
+      nodeSystem,
       entries,
-      nodes: savedNodes,
-      system: packedSystem,
-      variables,
-    });
+      variables
+    );
+
+    const dataJSON = JSON.stringify(packedProject, null, 2);
 
     if (!download) {
       if (projectId) {
