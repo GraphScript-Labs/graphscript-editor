@@ -16,6 +16,9 @@ import { usePromptContext } from "@utils/prompt";
 import { usePalleteContext } from "@utils/pallete";
 import { useVariablesContext } from "@utils/variables";
 import { loadProject, saveProject } from "@utils/engineTools";
+import { packProject } from "@utils/packerTools";
+import { backupProject, getRestoredProject } from "@utils/desktopTools";
+import { saveData } from "@utils/persistentTools";
 import {
   getBreadcrumb,
   getWindowTools,
@@ -155,6 +158,8 @@ const createAppDataContext = () => {
     useEffect(() => {
       (async () => {
         const existingId = await loadExistingId();
+        const restoredProject = await getRestoredProject();
+        saveData(`p:${existingId}`, restoredProject);
         setProjectId(existingId);
 
         loadProject(
@@ -208,6 +213,32 @@ const createAppDataContext = () => {
       nodeSystem,
       statesList,
       customComponents,
+    ]);
+
+    useEffect(() => {
+      const backupInterval = setInterval(() => {
+        const project = packProject(
+          projectId!,
+          nodeSystem,
+          entries,
+          {
+            states: statesList,
+            customComponents,
+          }
+        );
+
+        backupProject(JSON.stringify(project, null, 2));
+      }, 5000);
+
+      return () => {
+        clearInterval(backupInterval);
+      }
+    }, [
+      customComponents,
+      entries,
+      nodeSystem,
+      projectId,
+      statesList,
     ]);
     
     const exposed = {
