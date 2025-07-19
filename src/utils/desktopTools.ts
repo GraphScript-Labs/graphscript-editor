@@ -111,10 +111,10 @@ const setupDesktopTools = () => {
     return getApi()!.restore_project();
   }
 
-  const runProject = async (): Promise<void> => {
+  const runProject = async (script: string): Promise<void> => {
     if (!isDesktop()) return;
     await waitForPWV();
-    return getApi()!.run_project();
+    return getApi()!.run_project(script);
   }
 
   return {

@@ -6,7 +6,7 @@ import type { Suggestion } from "@defs/UI";
 import { isDesktop, loadProjectId, runProject } from "@utils/desktopTools";
 import { loadData, wipeData } from "@utils/persistentTools";
 import { generateId } from "@utils/generatorTools";
-import { downloadScript } from "@utils/compilerTools";
+import { downloadScript, generateScript } from "@utils/compilerTools";
 import {
   loadProject,
   saveProject,
@@ -89,7 +89,7 @@ const setupProjectTools = () => {
         {
           name: "Run Project",
           icon: "CirclePlay",
-          action: () => runProject(),
+          action: () => runProject(generateScript(nodeSystem, entries)),
         }
       ] : []),
     ];

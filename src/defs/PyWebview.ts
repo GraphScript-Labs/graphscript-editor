@@ -11,7 +11,7 @@ export interface PyWebview {
     load_project_id: () => Promise<string | null>;
     backup_project: (content: string) => Promise<boolean>;
     restore_project: () => Promise<string>;
-    run_project: () => Promise<void>;
+    run_project: (script: string) => Promise<void>;
   }
 }
 
