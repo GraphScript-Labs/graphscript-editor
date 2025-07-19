@@ -3,7 +3,7 @@ import type { RefObject } from "react";
 import type { NodeSystem, Variable } from "@defs/Node";
 import type { Suggestion } from "@defs/UI";
 
-import { loadProjectId } from "@utils/desktopTools";
+import { isDesktop, loadProjectId, runProject } from "@utils/desktopTools";
 import { loadData, wipeData } from "@utils/persistentTools";
 import { generateId } from "@utils/generatorTools";
 import { downloadScript } from "@utils/compilerTools";
@@ -85,6 +85,13 @@ const setupProjectTools = () => {
         icon: "Rocket",
         action: () => downloadScript(nodeSystem, entries),
       },
+      ...(isDesktop() ? [
+        {
+          name: "Run Project",
+          icon: "CirclePlay",
+          action: () => runProject(),
+        }
+      ] : []),
     ];
   };
 

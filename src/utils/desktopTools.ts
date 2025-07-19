@@ -111,6 +111,12 @@ const setupDesktopTools = () => {
     return getApi()!.restore_project();
   }
 
+  const runProject = async (): Promise<void> => {
+    if (!isDesktop()) return;
+    await waitForPWV();
+    return getApi()!.run_project();
+  }
+
   return {
     isDesktop,
     closeWindow,
@@ -119,7 +125,8 @@ const setupDesktopTools = () => {
     loadFile,
     loadProjectId,
     backupProject,
-    getRestoredProject
+    getRestoredProject,
+    runProject,
   }
 };
 
@@ -132,5 +139,6 @@ export const {
   loadProjectId,
   backupProject,
   getRestoredProject,
+  runProject,
 } = setupDesktopTools();
 
